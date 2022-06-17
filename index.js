@@ -8,16 +8,30 @@ server.use(express.json());
 const users = [];
 const tweets = [];
 
+function validate (obj) {
+    return Object.entries(obj).every(entry => entry[1] != "" && typeof(entry[1]) == "string");
+}
+
 server.post("/sign-up", (req, res) => {
-    users.push(req.body);
-    res.send("OK");
+    if (!validate(req.body)) {
+        res.status(400).send("Todos os campos são obrigatórios!");
+    } else {
+        users.push(req.body);
+        res.status(201).send("OK");
+    }
 });
 
 server.post("/tweets", (req, res) => {
-    let tweetAuthor = users.find(user => user.username === req.body.username);
-    const tweet = {...req.body, avatar: tweetAuthor.avatar};
-    tweets.push(tweet);
-    res.send("OK");
+    console.log(req.body);
+    console.log(users);
+    if (!validate(req.body)) {
+        res.status(400).send("Todos os campos são obrigatórios!");
+    } else {
+        let tweetAuthor = users.find(user => user.username == req.body.username);
+        const tweet = {...req.body, avatar: tweetAuthor.avatar};
+        tweets.push(tweet);
+        res.status(201).send("OK");
+    }
 });
 
 server.get("/tweets", (req, res) => {
