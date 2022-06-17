@@ -22,7 +22,6 @@ server.post("/sign-up", (req, res) => {
 });
 
 server.post("/tweets", (req, res) => {
-    console.log(req.body);
     if (!validate(req.body)) {
         res.status(400).send("Todos os campos são obrigatórios!");
     } else {
@@ -35,6 +34,10 @@ server.post("/tweets", (req, res) => {
 
 server.get("/tweets", (req, res) => {
     res.send(tweets.slice(-10).reverse());
+});
+
+server.get("/tweets/:username", (req, res) => {
+    res.send(tweets.filter(tweet => tweet.username == req.params.username));
 });
 
 server.listen(5000, () => {
