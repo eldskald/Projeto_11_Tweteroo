@@ -14,7 +14,9 @@ server.post("/sign-up", (req, res) => {
 });
 
 server.post("/tweets", (req, res) => {
-    tweets.push(req.body);
+    let tweetAuthor = users.find(user => user.username === req.body.username);
+    const tweet = {...req.body, avatar: tweetAuthor.avatar};
+    tweets.push(tweet);
     res.send("OK");
 });
 
