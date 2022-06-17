@@ -33,7 +33,14 @@ server.post("/tweets", (req, res) => {
 });
 
 server.get("/tweets", (req, res) => {
-    res.send(tweets.slice(-10).reverse());
+    const page = Number(req.query.page);
+    if (page == 1) {
+        res.send(tweets.slice(-10).reverse());
+    } else {
+        const sliceStart = -10 * page;
+        const sliceEnd = page > 0 ? -10 * (page - 1) : 0;
+        res.send(tweets.slice(sliceStart, sliceEnd).reverse());
+    }
 });
 
 server.get("/tweets/:username", (req, res) => {
