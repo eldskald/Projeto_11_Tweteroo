@@ -44,7 +44,7 @@ server.get("/tweets", (req, res) => {
 });
 
 server.get("/tweets/:username", (req, res) => {
-    res.send(tweets.filter(tweet => tweet.username == req.params.username));
+    res.send(tweets.filter(tweet => tweet.username == req.params.username).reverse());
 });
 
 server.listen(5000, () => {
