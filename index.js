@@ -23,12 +23,11 @@ server.post("/sign-up", (req, res) => {
 
 server.post("/tweets", (req, res) => {
     console.log(req.body);
-    console.log(users);
     if (!validate(req.body)) {
         res.status(400).send("Todos os campos são obrigatórios!");
     } else {
-        let tweetAuthor = users.find(user => user.username == req.body.username);
-        const tweet = {...req.body, avatar: tweetAuthor.avatar};
+        let tweetAuthor = users.find(user => user.username == req.headers.user);
+        const tweet = {...tweetAuthor, ...req.body};
         tweets.push(tweet);
         res.status(201).send("OK");
     }
