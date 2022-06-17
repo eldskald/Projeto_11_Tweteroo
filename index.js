@@ -21,7 +21,7 @@ server.post("/tweets", (req, res) => {
 });
 
 server.get("/tweets", (req, res) => {
-    res.send(tweets.slice(-10));
+    res.send(tweets.slice(-10).reverse());
 });
 
 server.listen(5000, () => {
